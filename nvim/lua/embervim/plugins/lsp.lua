@@ -64,7 +64,9 @@ return {
 			-- --------------------------- --
 			local lsp_zero = require("lsp-zero")
 			local lsp_defaults = require("lspconfig").util.default_config
-			require("inlay-hints").setup()
+			require("inlay-hints").setup({
+				autocmd = { enable = false },
+			})
 			lsp_defaults.capabilities =
 				vim.tbl_deep_extend("force", lsp_defaults.capabilities, require("cmp_nvim_lsp").default_capabilities())
 

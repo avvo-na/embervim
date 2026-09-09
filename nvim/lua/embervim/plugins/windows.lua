@@ -27,5 +27,38 @@ return {
 				fps = 120,
 			},
 		})
+
+		local autowidth = require("windows.autowidth")
+		local autowidth_enabled = true
+
+		local function sync_autowidth()
+			local ok, lifecycle = pcall(require, "codediff.ui.lifecycle")
+			local in_review = ok and lifecycle.get_session(vim.api.nvim_get_current_tabpage()) ~= nil
+			local should_enable = not in_review
+
+			if should_enable == autowidth_enabled then
+				return
+			end
+
+			if should_enable then
+				autowidth.enable()
+			else
+				autowidth.disable()
+			end
+			autowidth_enabled = should_enable
+		end
+
+		local group = vim.api.nvim_create_augroup("windows_codediff", { clear = true })
+		vim.api.nvim_create_autocmd("TabEnter", {
+			group = group,
+			callback = sync_autowidth,
+		})
+		vim.api.nvim_create_autocmd("User", {
+			group = group,
+			pattern = { "CodeDiffOpen", "CodeDiffClose" },
+			callback = function()
+				vim.schedule(sync_autowidth)
+			end,
+		})
 	end,
 }

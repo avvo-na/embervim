@@ -38,6 +38,18 @@ This is meant to be used as a baseline for your own configuration! All you have 
 is clone this repo, and smack that `nvim` folder into `~/.config`. Have a configuration
 there already? Just go ahead and `rm -rf ~/.config` and you'll be good to go!
 
+## Install on Ubuntu
+Use the bootstrap script to install a current stable Neovim release, common CLI tools,
+this config, and run a first-time headless setup:
+
+```bash
+git clone https://github.com/avvo-na/embervim.git
+cd embervim
+./scripts/install-ubuntu.sh --with-optional
+```
+
+The script installs Neovim from the official release `.deb`, not Ubuntu's older apt package.
+
 **Features**
 - LSP
 - Autocomplete
